@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import {NavLink, Switch, Route} from 'react-router-dom';
 import Home from './components/Home';
@@ -11,53 +11,6 @@ import {createStore} from 'redux';
 import reducer from './reducers/tiendaReducer';
 
 const App = () => {
-
-  const agregarProductoCarrito = (idProducto, nombre) => {
-    // Si el carrito no tiene elementos entonces agregamos uno.
-    if(carrito.length === 0){
-      cambiarCarrito([{id: idProducto, nombre: nombre, cantidad: 1}]);
-    } else {
-      // De otra foma tenemos que revisar que el carrito no tenga ya el producto que queremos agregar.
-      // Si ya lo tiene entonces queremos actualizar su valor.
-      // Si no tiene el producto entonces lo agregamos.
-
-      // Para poder editar el arreglo tenemos que clonarlo.
-      const nuevoCarrito = [...carrito];
-
-       // Comprobamos si el carrito ya tiene el ID del producto a agregar.
-      const enCarrito = nuevoCarrito.filter((productoCarrito) => {
-        return productoCarrito.id === idProducto
-      }).length > 0;
-
-      // Si ya tiene el producto entonces lo tenemos que actualizar.
-      if(enCarrito){
-        // Para ello tenemos que buscarlo, obtener su posicion en el arreglo.
-        // Y en base a su posicion ya actualizamos el valor.
-        nuevoCarrito.forEach((productoCarrito, index) => {
-            if(productoCarrito.id === idProducto){
-                const cantidad = nuevoCarrito[index].cantidad;
-                nuevoCarrito[index] = {
-                    id: idProducto, 
-                    nombre: nombre, 
-                    cantidad: cantidad + 1
-                }
-            }
-        });
-        // De otra forma entonces agregamos el producto al arreglo.
-      } else {
-        nuevoCarrito.push(
-            {
-                id: idProducto,
-                nombre: nombre,
-                cantidad: 1
-            }
-        );
-      }
-
-      // Por ultimo actualizamos el carrito.
-      cambiarCarrito(nuevoCarrito);
-    }
-  }
   //reducer es una funcion que edita el estado global
   const store = createStore(reducer);
 
